@@ -3,15 +3,16 @@ on:
   workflow_dispatch:
     inputs:
       test_tag:
-        description: 'Test tag to run (e.g. @token-api-test or @zod-schema-definition). Leave empty to run all tests.'
+        description: 'Çalıştırılacak test etiketi (örn. @token-api-test veya @zod-schema-definition). Tüm testleri çalıştırmak için boş bırakın.'
         required: false
         default: ''
 
 jobs:
   playwright-test:
     runs-on: ubuntu-latest
+    # SİHİRLİ DOKUNUŞ: GitHub'a testi bu konteyner içinde koş diyoruz.
     container:
-      image: mcr.microsoft.com/playwright:v1.58.2-jammy
+      image: mcr.microsoft.com/playwright:v1.58.2-jammy 
     steps:
       - uses: actions/checkout@v4
 
@@ -21,10 +22,10 @@ jobs:
       - name: Run Playwright tests
         run: |
           if [ -n "${{ github.event.inputs.test_tag }}" ]; then
-            echo "Running tag: ${{ github.event.inputs.test_tag }}"
+            echo "Çalıştırılan etiket: ${{ github.event.inputs.test_tag }}"
             npx playwright test --grep "${{ github.event.inputs.test_tag }}"
           else
-            echo "Running all tests..."
+            echo "Tüm testler çalıştırılıyor..."
             npx playwright test
           fi
 
