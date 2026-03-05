@@ -1,7 +1,5 @@
 name: Playwright Tests (Docker)
 on:
-  push:
-  pull_request:
   workflow_dispatch:
     inputs:
       test_tag:
